@@ -9,18 +9,18 @@ public class Phonebook {
 	Create create = new Create();
 	ArrayList<Create> array = new ArrayList<>();
 
-	public int getid(int limit) {
-		int num = 0;
+	public int getid(long limit) {
+		int id = 0;
 		boolean r = true;
 
 		do {
 			try {
-				num = sc.nextInt();
-				if (num > limit || num <= 0) {
+				id = sc.nextInt();
+				if (id > limit || id <= 0) {
 					System.out.println(" Please Enter within :" + limit);
 					continue;
 				}
-				if (num > 0 && num < limit)
+				if (id > 0 && id < limit)
 
 					r = false;
 			} catch (InputMismatchException e) {
@@ -30,74 +30,74 @@ public class Phonebook {
 			}
 
 		} while (r == true);
-		return num;
+		return id;
 	}
 
-	public void Creating() {
+	public void creating() {
 		System.out.println("\tCreating a contact");
 		System.out.println("Enter the id");
-		// Scanner sc=new Scanner(System.in);
-		int id = getid(999);
+
+		int id = getid(9999999999L);
 		if (!map.containsKey(id)) {
 
 			map.put(id, create);
 			System.out.println("Enter the name :");
 			create.setName(sc.next());
 			System.out.println("Enter the number:");
-			long PhNo = get_num();
-			create.setPhno(PhNo);
+			long phonenumber = getphonenumber();
+			create.setPhno(phonenumber);
 			System.out.println("Enter your mail id :");
-			String s = get_mail();
-			create.setMail(s);
+			String email = getmail();
+			create.setMail(email);
 			System.out.println("Enter your address :");
 			create.setAddr(sc.next());
 			System.out.println("\tSaved Successfully");
-			Displaying(id);
+			displaying(id);
 		} else
 			System.out.println("Contact Already Present");
 	}
 
-	public long get_num() {
-		// Set<Long> PhNo = new HashSet<>();
-		long num = 0;
+	public long getphonenumber() {
+
+		long phone = 0;
 		boolean a = true;
 
 		do {
 
 			try {
-				num = sc.nextLong();
+				phone = sc.nextLong();
 
-				if (num > 999999999 && num <= 9999999999L)
+				if (phone > 999999999 && phone <= 9999999999L)
 					a = false;
 				else
-					System.out.println("The entered number is not a valid ph number");
-			} catch (InputMismatchException e) {
+					System.out.println("The entered number is not a valid phone number");
+			} catch (InputMismatchException exception) {
 				System.out.println("Please enter your phone number correctly");
 				sc.next();
 				continue;
 			}
 		} while (a == true);
-		// PhNo.add(num);
-		return num;
+
+		return phone;
 	}
 
-	public String get_mail() {
+	public String getmail() {
 		boolean p = true;
-		String s;
+		String mailid;
 		do {
-			s = sc.nextLine();
+			mailid = sc.nextLine();
 			Pattern pattern = Pattern
 					.compile("[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})");
-			Matcher match = pattern.matcher(s);
+			Matcher match = pattern.matcher(mailid);
 			if (match.matches()) {
 				p = false;
 			} else
 				System.out.println("Please Enter a valid email id ");
 		} while (p == true);
-		return s;
+		return mailid;
 	}
 
-	public void Editing() {
+	public void editing() {
 		System.out.println("\tEditing a Contact");
 		System.out.println("Enter the id");
 		int id = getid(999);
@@ -111,7 +111,7 @@ public class Phonebook {
 					Select = sc.nextInt();
 					if (Select > 0 && Select < 5)
 						k = false;
-				} catch (InputMismatchException e) {
+				} catch (InputMismatchException exception) {
 					System.out.println("Please Make A Right Choice");
 					sc.next();
 				}
@@ -124,13 +124,13 @@ public class Phonebook {
 				System.out.println("\t Edited Successfully");
 				break;
 			case 2:
-				System.out.println("Enter the num :");
+				System.out.println("Enter the phonenumber :");
 				map.get(id).setPhno(sc.nextLong());
 				System.out.println("\t Edited Successfully");
 				break;
 			case 3:
 				System.out.println("Enter your mail id :");
-				String s = get_mail();
+				String s = getmail();
 				map.get(id).setMail(s);
 				System.out.println("\t Edited Successfully");
 				break;
@@ -144,10 +144,10 @@ public class Phonebook {
 			System.out.println("Entered Contact doesn't Exist");
 	}
 
-	public void Deleting() {
+	public void deleting() {
 		System.out.println("\tDeleting A Contact");
 		System.out.println("Enter the id");
-		int id = getid(99);
+		int id = getid(9999999999l);
 		if (map.containsKey(id)) {
 			map.remove(id);
 			System.out.println("Contact deleted of id :" + id);
@@ -155,7 +155,7 @@ public class Phonebook {
 			System.out.println("No Such Contact To be Deleted ");
 	}
 
-	public void Displaying(int id) {
+	public void displaying(int id) {
 		System.out.println("\tContact info");
 		// System.out.println("enter id to display");
 
@@ -167,59 +167,54 @@ public class Phonebook {
 
 	}
 
-	public void Display() {
+	public void display() {
 		System.out.println("\tDisplaying Contact");
-		
 
 		System.out.println("Enter the id");
 		int id = sc.nextInt(); // Displaying a Contact
 		boolean a = true;
 		if (map.containsKey(id)) {
 
-			for(Map.Entry<Integer, Create> m:map.entrySet()){  
-			Integer key=m.getKey();
-			Create create1=m.getValue();
-			System.out.println(create1.getName()+create1.getPhno()+create1.getMail()+create1.getAddr());
-				 }
-
-			} else {
-				System.out.println("no such id");
-				System.out.println("want to enter other 1/0");
-				int s=sc.nextInt();
-				if(s==1)
-				{
-					System.out.println("enter valid id to display");
-					Display();
-				}
-				
-				else
-				{
-					System.exit(0);
-				}
+			for (Map.Entry<Integer, Create> m : map.entrySet()) {
+				Integer key = m.getKey();
+				Create create1 = m.getValue();
+				System.out.println(create1.getName() + create1.getPhno() + create1.getMail() + create1.getAddr());
 			}
-		
+
+		} else {
+			System.out.println("no such id");
+			System.out.println("want to enter other 1/0");
+			int s = sc.nextInt();
+			if (s == 1) {
+				System.out.println("enter valid id to display");
+				display();
+			}
+
+			else {
+				System.exit(0);
+			}
+		}
 
 	}
 
-	
 	public void Selection(int option) {
 
 		switch (option) {
 		case 1:
-			Creating();
+			creating();
 
 			break;
 		case 2:
-			Editing();
+			editing();
 
 			break;
 		case 3:
-			Deleting();
+			deleting();
 			break;
 		case 4:
-			Display();
+			display();
 			break;
-		
+
 		default:
 			System.out.println("Exiting");
 			System.exit(0);
@@ -228,7 +223,7 @@ public class Phonebook {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		Phonebook obj = new Phonebook();
+		Phonebook phone = new Phonebook();
 		boolean x = true;
 		int option = 0;
 		do {
@@ -241,7 +236,7 @@ public class Phonebook {
 					if (option >= 1 && option <= 5) {
 						y = false;
 
-						obj.Selection(option);
+						phone.Selection(option);
 					} else
 						System.out.println(" Make a Proper Choice ");
 				} catch (Exception e) {
